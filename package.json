@@ -1,7 +1,7 @@
 {
 	"name": "spotify-clone",
 	"version": "1.0.0",
-	"description": "",
+	"description": "<h1 align=\"center\">Realtime Spotify Application ✨</h1>",
 	"main": "index.js",
 	"scripts": {
 		"build": "npm install --prefix backend && npm install --prefix frontend && npm run build --prefix frontend",
@@ -9,5 +9,39 @@
 	},
 	"keywords": [],
 	"author": "",
-	"license": "ISC"
+	"license": "ISC",
+	"dependencies": {
+		"@clerk/clerk-react": "^5.24.2",
+		"@radix-ui/react-avatar": "^1.1.3",
+		"@radix-ui/react-dialog": "^1.1.6",
+		"@radix-ui/react-icons": "^1.3.2",
+		"@radix-ui/react-scroll-area": "^1.2.3",
+		"@radix-ui/react-select": "^2.1.6",
+		"@radix-ui/react-slider": "^1.2.3",
+		"@radix-ui/react-tabs": "^1.1.3",
+		"axios": "^1.8.3",
+		"class-variance-authority": "^0.7.1",
+		"lucide-react": "^0.482.0",
+		"react-hot-toast": "^2.5.2",
+		"react-resizable-panels": "^2.1.7",
+		"react-router-dom": "^7.3.0",
+		"socket.io-client": "^4.8.1",
+		"tailwind-merge": "^3.0.2",
+		"zustand": "^5.0.3"
+	},
+	"devDependencies": {
+		"@types/axios": "^0.9.36",
+		"@types/react": "^19.0.11",
+		"@types/react-dom": "^19.0.4",
+		"@types/socket.io-client": "^1.4.36"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/burakorkmez/realtime-spotify-clone.git"
+	},
+	"type": "commonjs",
+	"bugs": {
+		"url": "https://github.com/burakorkmez/realtime-spotify-clone/issues"
+	},
+	"homepage": "https://github.com/burakorkmez/realtime-spotify-clone#readme"
 }

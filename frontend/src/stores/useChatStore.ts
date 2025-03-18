@@ -1,7 +1,7 @@
 import { axiosInstance } from "@/lib/axios";
 import { Message, User } from "@/types";
 import { create } from "zustand";
-import { io } from "socket.io-client";
+import io from "socket.io-client";
 
 interface ChatStore {
 	users: User[];
@@ -26,7 +26,7 @@ const baseURL = import.meta.env.MODE === "development" ? "http://localhost:5000"
 
 const socket = io(baseURL, {
 	autoConnect: false, // only connect if user is authenticated
-	withCredentials: true,
+	// Removed withCredentials as it is not a valid property for ConnectOpts
 });
 
 export const useChatStore = create<ChatStore>((set, get) => ({
@@ -45,7 +45,7 @@ export const useChatStore = create<ChatStore>((set, get) => ({
 	fetchUsers: async () => {
 		set({ isLoading: true, error: null });
 		try {
-			const response = await axiosInstance.get("/users");
+			const response = await axiosInstance.get<User[]>("/users");
 			set({ users: response.data });
 		} catch (error: any) {
 			set({ error: error.response.data.message });
@@ -56,7 +56,7 @@ export const useChatStore = create<ChatStore>((set, get) => ({
 
 	initSocket: (userId) => {
 		if (!get().isConnected) {
-			socket.auth = { userId };
+			socket.io.opts.query = { userId };
 			socket.connect();
 
 			socket.emit("user_connected", userId);
@@ -95,7 +95,7 @@ export const useChatStore = create<ChatStore>((set, get) => ({
 				}));
 			});
 
-			socket.on("activity_updated", ({ userId, activity }) => {
+			socket.on("activity_updated", ({ userId, activity }: { userId: string; activity: string }) => {
 				set((state) => {
 					const newActivities = new Map(state.userActivities);
 					newActivities.set(userId, activity);
@@ -125,7 +125,7 @@ export const useChatStore = create<ChatStore>((set, get) => ({
 		set({ isLoading: true, error: null });
 		try {
 			const response = await axiosInstance.get(`/users/messages/${userId}`);
-			set({ messages: response.data });
+			set({ messages: response.data as Message[] });
 		} catch (error: any) {
 			set({ error: error.response.data.message });
 		} finally {
